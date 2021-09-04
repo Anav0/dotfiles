@@ -1,6 +1,5 @@
 #!/bin/bash
-
-destinations=("/media/igor/Dysk lokalny/backup/" "/media/igor/Dysk lokalny1/backup/" "/media/igor/Interracial disk/source/")
+destinations=("/media/igor/Pan E/backup/" "/media/igor/Pan D/backup/" "/media/igor/Pan G/source/")
 src="/home/igor/source/"
 
 sync_with_source=("/home/igor/Documents/Keepass dbs" "/home/igor/Documents/Keys and certs")
