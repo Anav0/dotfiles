@@ -141,6 +141,7 @@ alias scripts="cd $HOME/scripts/"
 alias compile-latex="$HOME/scripts/compile-latex.sh"
 alias update-bib="$HOME/scripts/update-bib.sh"
 alias watch-latex="$HOME/scripts/watch-latex.sh"
+alias search="$HOME/scripts/search.sh"
 
 # Color toys aliases
 alias bloks="~/.color-toys/bloks"
@@ -165,3 +166,12 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="${IRACE_HOME}/.local/bin:$PATH"
 export EDITOR="vim"
 alias config='/usr/bin/git --git-dir=/$HOME/.dotfiles/ --work-tree=$HOME'
+alias calc="/usr/bin/sc-im"
+
+# NNN editor enviroment variables
+export NNN_BMS="d:$HOME/Downloads;j:~/source/Dysk/Jihad;s:~/Documents/Studia/;p:~/Projects"
+export NNN_PLUG="f:finder;o:fzopen;d:diffs;v:imgview;i:preview-tui"
+export NNN_FCOLORS=""
+export NNN_USE_EDITOR=1
+export NNN_FIFO=/tmp/nnn.fifo
+

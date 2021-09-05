@@ -30,7 +30,10 @@ source "$HOME/.cargo/env"
 export PATH="$PATH:$HOME/scripts"
 
 # NNN editor enviroment variables
-export NNN_BMS="d:~/Download;j~/source/Dysk/Jihad;s:~/Documents/Studia/;p~/Projects"
+export NNN_BMS="d:$HOME/Downloads;j:~/source/Dysk/Jihad;s:~/Documents/Studia/;p:~/Projects"
+export NNN_PLUG="f:finder;o:fzopen;d:diffs;v:imgview;i:preview-tui"
+export NNN_FCOLORS=""
 export NNN_USE_EDITOR=1
+export NNN_FIFO=/tmp/nnn.fifo
 
 systemctl --user restart pulseaudio.service
