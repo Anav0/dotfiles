@@ -37,3 +37,7 @@ export NNN_USE_EDITOR=1
 export NNN_FIFO=/tmp/nnn.fifo
 
 systemctl --user restart pulseaudio.service
+
+# MPD daemon start (if no other user instance exists)
+[ ! -s ~/.config/mpd/pid ] && mpd
+

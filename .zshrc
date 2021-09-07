@@ -120,13 +120,13 @@ alias reflesh="sudo reflector --verbose --latest 5 --sort rate --save /etc/pacma
 alias nanosu="sudo nano"
 alias vimsu="sudo vim"
 alias projects='cd $HOME/Projects'
-alias vimrc='vim ~/.vimrc'
-alias nvimrc='nvim ~/.nvimrc'
-alias bashrc='vim ~/.bashrc'
-alias zshrc='vim ~/.zshrc'
+alias vimrc='$EDITOR ~/.vimrc'
+alias nvimrc='$EDITOR ~/.nvimrc'
+alias bashrc='$EDITOR ~/.bashrc'
+alias zshrc='$EDITOR ~/.zshrc'
 alias mk='mkdir -pv'
 alias nusmv='$HOME/programs/NuSMV-2.6.0-Linux/bin/NuSMV'
-alias alacritty-config='vim $HOME/.config/alacritty.yml'
+alias ac='$EDITOR $HOME/.config/alacritty.yml'
 alias studia='cd $HOME/Documents/Studia'
 alias e="exa"
 alias E="exa -lh"
@@ -167,6 +167,7 @@ export PATH="${IRACE_HOME}/.local/bin:$PATH"
 export EDITOR="vim"
 alias config='/usr/bin/git --git-dir=/$HOME/.dotfiles/ --work-tree=$HOME'
 alias calc="/usr/bin/sc-im"
+alias xc="$EDITOR $HOME/.xmonad/xmonad.hs"
 
 # NNN editor enviroment variables
 export NNN_BMS="d:$HOME/Downloads;j:~/source/Dysk/Jihad;s:~/Documents/Studia/;p:~/Projects"

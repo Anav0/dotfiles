@@ -96,7 +96,7 @@ alias projects='$HOME/Projects'
 alias vimrc='nvim ~/config/vim/.vimrc'
 alias bashrc='nvim ~/.bashrc'
 alias studia='$HOME/Documents/Studia'
-alias alacritty-config='nvim $HOME/.config/alacritty.yml'
+alias ac='vim $HOME/.config/alacritty.yml'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
