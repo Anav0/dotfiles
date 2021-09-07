@@ -10,7 +10,7 @@ focus_new_windows = true
 
 [[keybind]]
 command = "Execute"
-value = "dmenu_run"
+value = "rofi -show"
 modifier = ["modkey"]
 key = "p"
 
