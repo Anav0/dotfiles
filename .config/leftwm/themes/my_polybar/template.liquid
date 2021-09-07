@@ -3,7 +3,7 @@
 %{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
 %{F#a9b1d6}%{B#24283b}  {{tag.name}}  %{B-}%{F-}
 %{A}
-{% elsif tag.visible  %}
+{% elsif tag.visible %}
 %{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
 %{F#a9b1d6}%{B#E60053}  {{tag.name}}  %{B-}%{F-}
 %{A}
@@ -11,11 +11,10 @@
 %{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
 %{F#7aa2f7}   {{tag.name}}   %{F-}
 %{A}
-{% else tag.visible  %}
+{% else tag.visible %}
 %{A1:$SCRIPTPATH/change_to_tag {{workspace.index}} {{tag.index}}:}
 %{F#a9b1d6}  {{tag.name}}  %{F-}
 %{A}
 {% endif %}
 {% endfor %}
-%{c}
-{{ window_title }}
+%{c}{{ window_title }}%{r} %{B#24283b}  {{ workspace.layout }}  %{B-}   

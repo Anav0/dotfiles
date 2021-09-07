@@ -244,3 +244,44 @@ command = "MoveToTag"
 value = "9"
 modifier = ["modkey", "Shift"]
 key = "9"
+
+[[keybind]]
+command = "ToggleFullScreen"
+modifier = ["modkey"]
+key = "f"
+
+[[keybind]]
+command = "SetLayout"
+value = "CenterMain"
+modifier = ["modkey"]
+key = "c"
+
+[[keybind]]
+command = "SetLayout"
+value = "MainAndVertStack"
+modifier = ["modkey"]
+key = "v"
+
+[[keybind]]
+command = "SetMarginMultiplier"
+value = "1"
+modifier = ["modkey"]
+key = "n"
+
+[[keybind]]
+command = "SetMarginMultiplier"
+value = "3"
+modifier = ["modkey"]
+key = "m"
+
+[[keybind]]
+command = "IncreaseMainWidth"
+value = "5"
+modifier = ["modkey"]
+key = "a"
+
+[[keybind]]
+command = "DecreaseMainWidth"
+value = "5"
+modifier = ["modkey"]
+key = "x"
