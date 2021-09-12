@@ -10,7 +10,7 @@ focus_new_windows = true
 
 [[keybind]]
 command = "Execute"
-value = "rofi -show"
+value = "$HOME/.config/rofi/bin/launcher_text"
 modifier = ["modkey"]
 key = "p"
 
@@ -24,6 +24,11 @@ key = "Return"
 command = "CloseWindow"
 modifier = ["modkey", "Shift"]
 key = "q"
+
+[[keybind]]
+command = "HardReload"
+modifier = ["modkey", "Shift"]
+key = "b"
 
 [[keybind]]
 command = "SoftReload"
