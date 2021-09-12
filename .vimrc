@@ -8,6 +8,7 @@ Plug 'ciaranm/securemodelines'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
 Plug 'itchyny/lightline.vim'
+Plug 'itchyny/calendar.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'airblade/vim-rooter'
@@ -71,6 +72,11 @@ let g:secure_modelines_allowed_items = [
                 \ ]
 " vim rooter
 let g:rooter_patterns=['=src']
+
+" Calendar
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+source ~/.cache/calendar.vim/credentials.vim
 
 " Lightline
 let g:lightline = {
