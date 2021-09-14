@@ -91,3 +91,5 @@ export NNN_FCOLORS=""
 export NNN_USE_EDITOR=1
 export NNN_FIFO=/tmp/nnn.fifo
 
+export BROWSER="brave-browser"
+export IRACE_HOME="$HOME/R/x86_64-pc-linux-gnu-library/4.0/irac"
