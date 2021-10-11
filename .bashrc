@@ -14,7 +14,7 @@ esac
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
-shopt -s histappend
+#shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
@@ -22,7 +22,7 @@ HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
-shopt -s checkwinsize
+# shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -89,19 +89,7 @@ fi
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
-alias projects='$HOME/Projects'
-alias vimrc='nvim ~/config/vim/.vimrc'
-alias bashrc='nvim ~/.bashrc'
-alias studia='$HOME/Documents/Studia'
-alias ac='vim $HOME/.config/alacritty.yml'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -112,29 +100,29 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export PATH="$PATH:/opt/mssql-tools/bin"
-export PATH="$HOME/.local/bin:$PATH"
-source "$HOME/.cargo/env"
-export PATH="$PATH:/opt/mssql-tools/bin"
-source /home/igor/Projects/alacritty/extra/completions/alacritty.bash
-source ~/.bash_completion/alacritty
+ source "$HOME/.cargo/env"
 
 alias config='/usr/bin/git --git-dir=/$HOME/.dotfiles/ --work-tree=$HOME'
 alias calc="/usr/bin/sc-im"
-
 alias search="$HOME/scripts/search.sh"
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias projects='$HOME/Projects'
+alias vimrc='nvim ~/config/vim/.vimrc'
+alias bashrc='nvim ~/.bashrc'
+alias studia='$HOME/Documents/Studia'
+alias ac='vim $HOME/.config/alacritty.yml'
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+export PATH="$PATH:/opt/mssql-tools/bin"
+export PATH="$PATH:/opt/mssql-tools/bin"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.config/rofi/bin:$PATH"
+#export PATH="$IRACE_HOME/.local/bin:$PATH"
 
 # NNN editor enviroment variables
 export NNN_BMS="d:$HOME/Downloads;j:~/source/Dysk/Jihad;s:~/Documents/Studia/;p:~/Projects"
@@ -150,5 +138,3 @@ export IRACE_HOME="$HOME/R/x86_64-pc-linux-gnu-library/4.0/irac"
 export R_LIBS=${R_LIBS_USER}:${R_LIBS}
 export TERM="xterm-256color"
 export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --follow --exclude .git'
-export PATH="$HOME/.config/rofi/bin:$PATH"
-export PATH="$IRACE_HOME/.local/bin:$PATH"
