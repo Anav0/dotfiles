@@ -4,34 +4,12 @@ let mapleader = "\<Space>"
 " # PLUGINS
 " =============================================================================
 call plug#begin()
-Plug 'ciaranm/securemodelines'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'justinmk/vim-sneak'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/calendar.vim'
-Plug 'machakann/vim-highlightedyank'
-Plug 'andymass/vim-matchup'
-Plug 'airblade/vim-rooter'
-Plug 'racer-rust/vim-racer'
 Plug 'junegunn/fzf'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'cespare/vim-toml'
-Plug 'stephpy/vim-yaml'
-Plug 'rust-lang/rust.vim'
-Plug 'vim-syntastic/syntastic'
-Plug 'rhysd/vim-clang-format'
-Plug 'dag/vim-fish'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'chriskempson/base16-vim'
-Plug 'preservim/nerdtree'
 Plug 'lervag/vimtex'
-Plug 'prettier/vim-prettier', {'do': 'npm install'} 
-Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && npm install' }
-Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-Plug 'wojciechkepka/vim-github-dark'
 
 call plug#end()
 set termguicolors
@@ -57,27 +35,6 @@ let g:mkdp_auto_close = 1
 
 autocmd FileType text set textwidth=72
 
-" Plugin settings
-let g:secure_modelines_allowed_items = [
-                \ "textwidth",   "tw",
-                \ "softtabstop", "sts",
-                \ "tabstop",     "ts",
-                \ "shiftwidth",  "sw",
-                \ "expandtab",   "et",   "noexpandtab", "noet",
-                \ "filetype",    "ft",
-                \ "foldmethod",  "fdm",
-                \ "readonly",    "ro",   "noreadonly", "noro",
-                \ "rightleft",   "rl",   "norightleft", "norl",
-                \ "colorcolumn"
-                \ ]
-" vim rooter
-let g:rooter_patterns=['=src']
-
-" Calendar
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-source ~/.cache/calendar.vim/credentials.vim
-
 " Lightline
 let g:lightline = {
       \'colorscheme': 'tokyonight',
@@ -93,24 +50,6 @@ let g:lightline = {
 function! LightlineFilename()
   return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
-
-" Use auocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
-" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-if executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
-endif
-if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
-endif
-
-" Javascript
-let javaScript_fold=0
-
-" Java
-let java_ignore_javadoc=1
 
 " Latex
 let g:vimtex_compiler_progname = 'nvr'
@@ -147,21 +86,7 @@ nmap <leader>w :w<CR>
 let g:localvimrc_ask = 0
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" racer + rust
-" https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_autosave = 1
-let g:rustfmt_emit_files = 1
-let g:rustfmt_fail_silently = 0
-let g:rust_clip_command = 'xclip -selection clipboard'
-"let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
 set spelllang=pl_PL
 
@@ -185,10 +110,6 @@ set hidden
 set wrap
 set textwidth=80
 set nojoinspaces
-let g:sneak#s_next = 1
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_frontmatter = 1
 set printfont=:h10
 set printencoding=utf-8
 set printoptions=paper:letter
@@ -358,82 +279,6 @@ imap <C-l> <Del>
 nmap <C-l> <Del>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 'Smart' nevigation
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-.> to trigger completion.
-inoremap <silent><expr> <c-.> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Introduce function text object
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for selections ranges.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-
-" Search workspace symbols.
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-
-" Implement methods for trait
-nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
-
-" Show actions available at this location
-nnoremap <silent> <space>a  :CocAction<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
@@ -462,12 +307,6 @@ autocmd BufRead *.pacnew set readonly
 
 " Leave paste mode when leaving insert mode
 autocmd InsertLeave * set nopaste
-
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
 
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
