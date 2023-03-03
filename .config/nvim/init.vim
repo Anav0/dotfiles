@@ -5,76 +5,40 @@ let mapleader = "\<Space>"
 " =============================================================================
 call plug#begin()
 
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/calendar.vim'
-Plug 'junegunn/fzf'
-Plug 'lervag/vimtex'
-Plug 'neovim/nvim-lspconfig'
-Plug 'simrat39/rust-tools.nvim'
+" Themes
+Plug 'ellisonleao/gruvbox.nvim'
 Plug 'projekt0n/github-nvim-theme'
+
+" Misc
+Plug 'itchyny/calendar.vim'
+
+" Search
+Plug 'universal-ctags/ctags'
+Plug 'junegunn/fzf'
+
+" UI
+Plug 'itchyny/lightline.vim'
+
+Plug 'lervag/vimtex'
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'ellisonleao/gruvbox.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'universal-ctags/ctags'
+
+" Semantic language support
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main'}
+Plug 'hrsh7th/cmp-buffer', {'branch': 'main'}
+Plug 'hrsh7th/cmp-path', {'branch': 'main'}
+Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
+Plug 'ray-x/lsp_signature.nvim'
 
 call plug#end()
 
-" =============
-" ==== LSP ====
-" =============
-
-lua << END
-
-local lspconfig = require'lspconfig'
-
-local opts = { noremap=true, silent=true }
-
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-end
-
-local lsp_flags = {
-  debounce_text_changes = 150,
-}
-
-require('lspconfig')['clangd'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-
-require('lspconfig')['rust_analyzer'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-
-END
-
 " COLOR SCHEME
+
 set termguicolors
-colorscheme github_dark_default
+colorscheme gruvbox
 
 set langmenu=en_US
 let $LANG = 'en_US'
@@ -149,9 +113,6 @@ set cmdheight=2
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" LSP
-lua require'lspconfig'.rust_analyzer.setup({})
-lua require('rust-tools').setup({})
 " =============================================================================
 " # Editor settings
 " =============================================================================
