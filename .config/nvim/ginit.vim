@@ -1,4 +1,3 @@
 if exists(':GuiFont')
-    " Use GuiFont! to ignore font errors
-    GuiFont! JetBrains\ Mono\: h16
+    GuiFont! JetBrains\ Mono\:h10
 endif

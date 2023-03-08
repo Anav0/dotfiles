@@ -15,30 +15,134 @@ Plug 'itchyny/calendar.vim'
 " Search
 Plug 'universal-ctags/ctags'
 Plug 'junegunn/fzf'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+" Only because nvim-cmp _requires_ snippets
+Plug 'hrsh7th/cmp-vsnip', {'branch': 'main'}
+Plug 'hrsh7th/vim-vsnip'
+
+" Side file tree vievew
+Plug 'preservim/nerdtree'
 
 " UI
 Plug 'itchyny/lightline.vim'
 
 Plug 'lervag/vimtex'
-Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
-Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Semantic language support
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/lsp_extensions.nvim'
-Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main'}
-Plug 'hrsh7th/cmp-buffer', {'branch': 'main'}
-Plug 'hrsh7th/cmp-path', {'branch': 'main'}
-Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
-Plug 'ray-x/lsp_signature.nvim'
 
 call plug#end()
+
+" LSP
+
+lua require'lspconfig'.rust_analyzer.setup({})
+lua require'lspconfig'.tsserver.setup {}
+
+lua << EOF
+local nvim_lsp = require'lspconfig'
+local cmp      = require'cmp'
+
+cmp.setup({
+  snippet = {
+    -- REQUIRED by nvim-cmp. get rid of it once we can
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-f>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-n>'] = cmp.mapping.scroll_docs(4),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+  }),
+  sources = cmp.config.sources({
+    -- TODO: currently snippets from lsp end up getting prioritized -- stop that!
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'path' },
+  }),
+  experimental = {
+    ghost_text = true,
+  },
+})
+
+-- Enable completing paths in :
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  })
+})
+
+local on_attach = function(client)
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', 'gs', vim.lsp.buf.document_symbol, bufopts)
+  vim.keymap.set('n', 'gS', vim.lsp.buf.workspace_symbol, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
+end
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+nvim_lsp.tsserver.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+nvim_lsp.rust_analyzer.setup({
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true
+            },
+        }
+    },
+    capabilities = capabilities,
+})
+
+EOF
+
+set completeopt=menuone,noinsert,noselect
 
 " COLOR SCHEME
 
 set termguicolors
 colorscheme gruvbox
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ }
 
 set langmenu=en_US
 let $LANG = 'en_US'
@@ -60,9 +164,8 @@ filetype plugin indent on
 syntax on
 
 " FILE BROWSER
-:lua require('nvim-web-devicons').setup()
-:lua require('nvim-tree').setup()
-nmap <C-b> :NvimTreeToggle<CR>
+nmap <C-b> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
 
 let g:mkdp_auto_close = 1
 
@@ -118,11 +221,10 @@ set updatetime=300
 " =============================================================================
 filetype plugin indent on
 
-set guifont="JetBrains Mono Regular"
-
 set autoindent
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
 set encoding=utf-8
+set fileencoding=utf-8
 set scrolloff=2
 set noshowmode
 set hidden
