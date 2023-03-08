@@ -132,6 +132,17 @@ nvim_lsp.rust_analyzer.setup({
     capabilities = capabilities,
 })
 
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "lua", "javascript", "typescript", "vim", "help", "query" },
+  sync_install = false,
+  auto_install = true,
+  ignore_install = { "javascript" },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  }
+}
+
 EOF
 
 set completeopt=menuone,noinsert,noselect
