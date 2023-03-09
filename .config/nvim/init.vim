@@ -15,7 +15,8 @@ Plug 'itchyny/calendar.vim'
 
 " Search
 Plug 'universal-ctags/ctags'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -249,7 +250,8 @@ autocmd FileType latex,tex,markdown,md setlocal spell spelllang=pl
 
 " Open hotkeys
 map <C-p> :FZF<CR>
-nmap <leader>; :Buffers<CR>
+map <C-[> :Rg<CR>
+nmap <leader>' :Buffers<CR>
 
 " Quick-save
 nmap <leader>w :w<CR>
@@ -410,15 +412,7 @@ map L $
 noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
-" <leader>s for Rg search
-noremap <leader>s :Rg
 let g:fzf_layout = { 'down': '~20%' }
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
