@@ -250,8 +250,8 @@ autocmd FileType latex,tex,markdown,md setlocal spell spelllang=pl
 
 " Open hotkeys
 map <C-p> :FZF<CR>
-map <C-[> :Rg<CR>
-nmap <leader>' :Buffers<CR>
+map <C-,> :Rg<CR>
+nmap <C-.> :Buffers<CR>
 
 " Quick-save
 nmap <leader>w :w<CR>
