@@ -44,6 +44,7 @@ call plug#end()
 
 lua require'lspconfig'.rust_analyzer.setup({})
 lua require'lspconfig'.tsserver.setup {}
+" lua require'lspconfig'.clangd.setup {}
 
 lua << EOF
 local nvim_lsp = require'lspconfig'
@@ -105,6 +106,7 @@ local on_attach = function(client)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 
 nvim_lsp.tsserver.setup({
     on_attach = on_attach,
@@ -285,9 +287,6 @@ set hidden
 set wrap
 set textwidth=80
 set nojoinspaces
-set printfont=:h10
-set printencoding=utf-8
-set printoptions=paper:letter
 
 " One status line across splits
 set laststatus=3
@@ -412,7 +411,7 @@ map L $
 noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
-let g:fzf_layout = { 'down': '~20%' }
+"let g:fzf_layout = { 'down': '~20%' }
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
