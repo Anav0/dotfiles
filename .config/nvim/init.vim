@@ -31,6 +31,7 @@ Plug 'preservim/nerdtree'
 
 " UI
 Plug 'itchyny/lightline.vim'
+Plug 'felipeagc/fleet-theme-nvim'
 
 Plug 'lervag/vimtex'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -42,9 +43,10 @@ call plug#end()
 
 " LSP
 
+lua require'lspconfig'.clangd.setup({})
 lua require'lspconfig'.rust_analyzer.setup({})
 lua require'lspconfig'.tsserver.setup {}
-" lua require'lspconfig'.clangd.setup {}
+lua require'lspconfig'.cucumber_language_server.setup {}
 
 lua << EOF
 local nvim_lsp = require'lspconfig'
@@ -107,10 +109,23 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-
 nvim_lsp.tsserver.setup({
     on_attach = on_attach,
     capabilities = capabilities,
+})
+
+nvim_lsp.clangd.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+nvim_lsp.cucumber_language_server.setup({
+    cmd = { "cucumber-language-server", "--stdio" },
+    filetypes = { "cucumber", "feature" },
+    root_dir = require("lspconfig").util.find_git_ancestor,
+    settings = {
+        features= {'src/*.feature'}
+    }
 })
 
 nvim_lsp.rust_analyzer.setup({
@@ -194,9 +209,9 @@ set completeopt=menuone,noinsert,noselect
 " COLOR SCHEME
 
 set termguicolors
-colorscheme rose-pine
+colorscheme fleet 
 let g:lightline = {
-      \ 'colorscheme': 'rosepine',
+      \ 'colorscheme': 'wombat',
       \ }
 
 set langmenu=en_US
@@ -253,7 +268,7 @@ autocmd FileType latex,tex,markdown,md setlocal spell spelllang=pl
 " Open hotkeys
 map <C-p> :FZF<CR>
 map <C-,> :Rg<CR>
-nmap <C-.> :Buffers<CR>
+map <C-.> :Buffers<CR>
 
 " Quick-save
 nmap <leader>w :w<CR>
@@ -287,6 +302,9 @@ set hidden
 set wrap
 set textwidth=80
 set nojoinspaces
+" set printfont=:h13
+" set printencoding=utf-8
+" set printoptions=paper:letter
 
 " One status line across splits
 set laststatus=3
@@ -312,9 +330,9 @@ set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
 
 " Use wide tabs
-set shiftwidth=8
-set softtabstop=8
-set tabstop=8
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set noexpandtab
 
 " Wrapping options
@@ -401,6 +419,12 @@ inoremap <C-f> :sus<cr>
 vnoremap <C-f> :sus<cr>
 nnoremap <C-f> :sus<cr>
 
+" Tab navigation
+
+map th :tabprev<cr>
+map tl :tabnext<cr>
+map tk :tabnew<cr>
+
 " Jump to start and end of line using the home row keys
 map H ^
 map L $
@@ -411,7 +435,7 @@ map L $
 noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
-"let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')

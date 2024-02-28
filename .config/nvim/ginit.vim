@@ -1,3 +1,7 @@
 if exists(':GuiFont')
-    GuiFont! JetBrains\ Mono\:h10
+    "GuiFont! FixedSys:h17
+    GuiFont! Fixedsys\ Excelsior:h12
+    "GuiFont! Cascadia\ Mono\:h11
+    "GuiFont! IBM\ Plex\ Mono\:h11
+    "GuiFont! OCR-A:h12
 endif
