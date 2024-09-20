@@ -1,0 +1,39 @@
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      // put key-bindings here if you want them to work in normal & visual mode
+      "shift-h": "vim::StartOfLine",
+      "shift-l": "vim::EndOfLine",
+      "ctrl-h": "vim::DeleteLeft",
+      "ctrl-l": "vim::DeleteRight",
+      "g r": "editor::FindAllReferences",
+      "g d": "editor::GoToDefinition",
+      "g D": "editor::GoToDefinitionSplit",
+      "g s": "project_symbols::Toggle",
+      "g e": "diagnostics::Deploy",
+      "t h": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "vim_mode == normal && !menu",
+    "bindings": {}
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "ctrl-j": "vim::NormalBefore",
+      "ctrl-h": "vim::DeleteLeft",
+      "ctrl-l": "vim::DeleteRight",
+      "shift-k": "editor::ShowSignatureHelp"
+    }
+  },
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      // put key-bindings here (in addition to above) if you want them to
+      // work when no editor exists
+      // "space f": "file_finder::Toggle"
+    }
+  }
+]
