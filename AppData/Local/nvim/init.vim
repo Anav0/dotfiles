@@ -26,15 +26,11 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip', {'branch': 'main'}
 Plug 'hrsh7th/vim-vsnip'
 
-" Side file tree vievew
-Plug 'preservim/nerdtree'
-
 " UI
 Plug 'itchyny/lightline.vim'
 Plug 'felipeagc/fleet-theme-nvim'
 
 Plug 'lervag/vimtex'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Semantic language support
 Plug 'neovim/nvim-lspconfig'
@@ -156,17 +152,6 @@ nvim_lsp.rust_analyzer.setup({
     },
     capabilities = capabilities,
 })
-
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "lua", "javascript", "typescript", "vim", "query" },
-  sync_install = false,
-  auto_install = true,
-  ignore_install = { },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  }
-}
 
 require('rose-pine').setup({
 	--- @usage 'auto'|'main'|'moon'|'dawn'
