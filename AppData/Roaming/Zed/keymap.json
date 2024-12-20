@@ -4,6 +4,8 @@
     "bindings": {
       // put key-bindings here if you want them to work in normal & visual mode
       "shift-h": "vim::StartOfLine",
+      "shift-j": "editor::OpenExcerptsSplit",
+      "shift-k": "editor::OpenExcerpts",
       "shift-l": "vim::EndOfLine",
       "ctrl-h": "vim::DeleteLeft",
       "ctrl-l": "vim::DeleteRight",

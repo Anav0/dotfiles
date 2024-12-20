@@ -26,6 +26,9 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip', {'branch': 'main'}
 Plug 'hrsh7th/vim-vsnip'
 
+" Side file tree vievew
+Plug 'preservim/nerdtree'
+
 " UI
 Plug 'itchyny/lightline.vim'
 Plug 'felipeagc/fleet-theme-nvim'
@@ -42,7 +45,6 @@ call plug#end()
 lua require'lspconfig'.clangd.setup({})
 lua require'lspconfig'.rust_analyzer.setup({})
 lua require'lspconfig'.cucumber_language_server.setup {}
-lua require'lspconfig'.glslls.setup {}
 
 lua << EOF
 local nvim_lsp = require'lspconfig'
@@ -106,11 +108,6 @@ end
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 nvim_lsp.clangd.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-})
-
-nvim_lsp.glslls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
 })
@@ -189,15 +186,12 @@ require('rose-pine').setup({
 
 EOF
 
-" autocmd BufNewFile,BufRead *.vert setfiletype glsl
-" autocmd BufNewFile,BufRead *.frag setfiletype glsl
-
 set completeopt=menuone,noinsert,noselect
 
 " COLOR SCHEME
 
 set termguicolors
-colorscheme fleet 
+colorscheme fleet
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
@@ -249,7 +243,7 @@ let g:vimtex_compiler_latexmk = {
         \   '-synctex=1',
         \   '-interaction=nonstopmode',
         \ ],
-        \} 
+        \}
 
 autocmd FileType latex,tex,markdown,md setlocal spell spelllang=pl
 
@@ -257,47 +251,6 @@ autocmd FileType latex,tex,markdown,md setlocal spell spelllang=pl
 map <C-p> :FZF<CR>
 map <C-,> :Rg<CR>
 map <C-.> :Buffers<CR>
-
-function! BuildProject()
-  if &filetype == 'rust'
-    " Build Rust project
-    execute 'write'
-    execute '!cargo build'
-
-  elseif &filetype == 'cpp'
-    execute 'write'
-    execute '!powershell ./build.ps1'
-  else
-    echo "No build command defined for this file type."
-  endif
-endfunction
-
-function! RunProject()
-  if &filetype == 'rust'
-    " Build Rust project
-    execute 'write'
-    execute '!cargo run'
-	elseif &filetype == 'python'
-    execute 'write'
-    execute '!python3 '
-
-  elseif &filetype == 'cpp'
-    execute 'write'
-    execute '!powershell ./run_debug.ps1'
-  else
-    echo "No run command defined for this file type."
-  endif
-endfunction
-
-" Build
-nnoremap <F5> :call RunProject()<CR>
-nnoremap <F8> :call BuildProject()<CR>
-
-" map <F4> :!powershell ./run_release.ps1<CR>
-" map <F5> :!powershell ./run_debug.ps1<CR>
-map <F7> :!powershell ./build_dll.ps1<CR>
-"map <F8> :!powershell ./build.ps1<CR>
-map <F9> :source Session.vim<CR>
 
 " Quick-save
 nmap <leader>w :w<CR>
