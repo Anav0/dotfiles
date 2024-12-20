@@ -42,6 +42,7 @@ call plug#end()
 
 " LSP
 
+lua require'lspconfig'.c3_lsp.setup({})
 lua require'lspconfig'.clangd.setup({})
 lua require'lspconfig'.rust_analyzer.setup({})
 lua require'lspconfig'.cucumber_language_server.setup {}
@@ -106,6 +107,12 @@ local on_attach = function(client)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+
+nvim_lsp.c3_lsp.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
 
 nvim_lsp.clangd.setup({
     on_attach = on_attach,
